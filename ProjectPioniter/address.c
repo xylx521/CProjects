@@ -1,7 +1,12 @@
+
+// address.c显示变量和字符串的地址
 #include <stdio.h>
 int main(){
     int a = 100;
-    char str[20] = "c.biancheng.net";
-    printf("%#X, %#X\n", &a, str);
+    char str[20] = "clanguage";
+    printf("%#X, %#X\n", &a, str);       
     return 0;
 }
+
+//%#X表示以十六进制形式输出，并附带前缀0X。a 是一个变量，用来存放整数，需要在前面加&来获得它的地址；str 本身就表示字符串的首地址，不需要加&。
+//C语言中有一个控制符%p，专门用来以十六进制形式输出地址，不过 %p 的输出格式并不统一，有的编译器带0x前缀，有的不带，所以此处我们并没有采用。
