@@ -4,6 +4,12 @@ void add_one(int *p){
     *p = *p + 1;
 }
 
+//运行成功后，额外挑战：把 add_one 改成 add_n(int *p, int n)，让它加任意数。
+void add_n(int *p, int n) {
+    *p = *p + n;
+    }
+
+
 int main(void){
     int x = 10;
     int y = 20;
@@ -24,5 +30,12 @@ int main(void){
     add_one(&x);
     printf("add_one后 x=%d\n", x);
 
-    return 0;
+    //运行成功后，额外挑战：把 add_one 改成 add_n(int *p, int n)，让它加任意数。
+    int n1 = 5;
+    add_n(&x, n1);
+    printf("x 加 %d 后 x=%d\n", n1, x);
+
+    return 0; 
 }
+
+
