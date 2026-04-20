@@ -39,6 +39,45 @@ LedHandler led_handlers[LED_STATE_MAX] = {
     led_blink,
 };
 
+// 传感器类型
+typedef enum {
+    SENSOR_TEMP  = 0,
+    SENSOR_HUMID = 1,
+    SENSOR_PRESS = 2,
+} SensorType_t;
+
+// 传感器数据（union 节省内存，同一时刻只有一种数据）
+typedef union {
+    float    temperature;
+    float    humidity;
+    uint32_t pressure;
+} SensorValue_t;
+
+// 传感器完整描述
+typedef struct {
+    SensorType_t  type;     // 传感器类型
+    SensorValue_t value;    // 当前值
+    uint8_t       valid;    // 数据是否有效
+    uint32_t      last_update_ms;  // 上次更新时间
+} Sensor_t;
+
+void print_sensor(Sensor_t *s) {
+    switch ((*s).type) {
+        case SENSOR_TEMP:
+            printf("温度: %.2f °C\n", (*s).value.temperature);
+            break;
+        case SENSOR_HUMID:
+            printf("湿度: %.2f %%\n", (*s).value.humidity);
+            break;
+        case SENSOR_PRESS:
+            printf("压力: %u hPa\n", (*s).value.pressure);
+            break;
+    }
+    switch(s->valid) {
+        case 0: printf("数据无效\n"); break;
+    }
+}
+
 int main(void) {
     //部分1：结构体对齐
     printf("=== 内存对齐 ===\n");
@@ -57,5 +96,42 @@ int main(void) {
 
     //部分3：枚举 + 状态机
     printf("\n=== 状态机 ===\n");
+    LedState_t state = LED_OFF;
+    for (int i = 0; i < LED_STATE_MAX; i++) {
+        state = (LedState_t)i;
+        printf("状态 %d: ", state);
+        led_handlers[state]();
+    }
 
+    //部分4：传感器结构体
+    printf("\n=== 传感器结构体 ===\n");
+    Sensor_t sensor = {
+        .type = SENSOR_TEMP,
+        .value.temperature = 25.0,
+        .valid = 1,
+        .last_update_ms = 1000,
+    };
+    Sensor_t sensor2 = {
+        .type = SENSOR_HUMID,
+        .value.humidity = 50.0,
+        .valid = 1,
+        .last_update_ms = 2000,
+    };
+    Sensor_t sensor3 = {
+        .type = SENSOR_PRESS,
+        .value.pressure = 1000,
+        .valid = 1,
+        .last_update_ms = 3000,
+    };
+    Sensor_t sensorerr = {
+        .type = SENSOR_TEMP,
+        .value.temperature = 25.0,
+        .valid = 0,
+        .last_update_ms = 1000,
+    };
+    Sensor_t sensors[] = {sensor, sensor2, sensor3, sensorerr};
+    for (int i = 0; i < sizeof(sensors) / sizeof(sensors[0]); i++) {
+        print_sensor(&sensors[i]);
+    }
+    return 0;
 }
