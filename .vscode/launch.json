@@ -5,19 +5,14 @@
             "name": "Debug C Program",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [
-                {
-                    "name": "LANG",
-                    "value": "en_US.UTF-8"
-                }
-            ],
-            "externalConsole": false,              // 使用内部终端
-            "MIMode": "gdb",                      // 使用 GDB 调试器
-            "miDebuggerPath": "gdb",              // 确保 GDB 在 PATH 中
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -25,7 +20,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build C program"    // 在调试前自动编译
+            "preLaunchTask": "build active c file"
         }
     ]
 }
