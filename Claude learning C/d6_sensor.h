@@ -30,7 +30,7 @@ typedef enum {
 //传感器数据
 typedef struct {
     float         temperature;
-    SensorState_t state;
+    SensorState_t status;
 } SensorData_t;
 
 #endif

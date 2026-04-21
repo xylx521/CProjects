@@ -29,6 +29,17 @@ SensorData_t read_sensor(float raw_temp){
 }
 
 int main(void){
+    //测试1：正常数据
+    SensorData_t d1 = read_sensor(25.6f);
+    printf("温度=%.2f 状态=%d\n\n", d1.temperature, d1.status);
 
-    
+    //测试2：超出范围的数据
+    SensorData_t d2 = read_sensor(200.0f);
+    printf("温度=%.2f 状态=%d\n", d2.temperature, d2.status);
+
+    //测试3：打印编译信息
+    printf("编译时间: %s %s\n", __DATE__, __TIME__);
+    printf("最大传感器数量: %d\n", SENSOR_MAX_COUNT);
+
+    return 0;
 }
