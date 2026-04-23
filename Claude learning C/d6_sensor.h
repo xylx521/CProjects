@@ -35,3 +35,13 @@ typedef struct {
 
 #endif
 
+
+#define MCU_TYPE 32
+
+#if MCU_TYPE == 32
+    #define reg_t uint32_t
+#elif MCU_TYPE == 16
+    #define reg_t uint16_t
+#else
+    #error "Unsupported MCU_TYPE"
+#endif

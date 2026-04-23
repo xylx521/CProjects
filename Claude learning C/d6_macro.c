@@ -40,6 +40,6 @@ int main(void){
     //测试3：打印编译信息
     printf("编译时间: %s %s\n", __DATE__, __TIME__);
     printf("最大传感器数量: %d\n", SENSOR_MAX_COUNT);
-
+    printf("MCU寄存器类型: %d字节\n", (sizeof(reg_t)));
     return 0;
 }
